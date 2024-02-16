@@ -1,0 +1,22 @@
+.Navigation {
+	width: 600px;
+}
+
+.center {
+	display: flex;
+	justify-content: space-around;
+	font-size: 2rem;
+	font-weight: 700;
+  text-shadow: -1px 1px 1px black;
+}
+
+.authCenter {
+	display: flex;
+  margin: auto;
+	justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+	font-size: 1.25rem;
+	font-weight: 700;
+}

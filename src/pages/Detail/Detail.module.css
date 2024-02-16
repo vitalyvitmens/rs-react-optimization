@@ -1,0 +1,52 @@
+.Detail {
+	background-color: rgba(234, 223, 249, 0.5);
+	padding: 10px 10px 50px 10px;
+	width: 600px;
+  height: fit-content;
+	border-radius: 10px;
+	box-shadow: -4px -2px 10px black;
+}
+
+.row {
+	display: flex;
+  margin: 40px 20px;
+}
+
+.Detail img {
+	transition: transform 0.3s;
+	border: 1px solid #084949;
+	border-radius: 10px;
+	box-shadow: -4px -2px 10px black;
+}
+
+.name {
+	display: flex;
+	color: #161bb6;
+	font-size: 2rem;
+	font-weight: 700;
+	text-align: start;
+	text-shadow: -2px 2px 2px rgb(57, 7, 7);
+}
+
+span {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: rgb(2, 74, 2);
+	text-shadow: -1px 1px 1px black;
+}
+
+.column {
+	margin: 10px 0 0 20px;
+}
+
+.body {
+	display: flex;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: rgb(2, 74, 2);
+	text-shadow: -1px 1px 1px black;
+}
+
+.Detail img:hover {
+	transform: scale(1.1);
+}

@@ -1,0 +1,8 @@
+.authStatus {
+	display: flex;
+	gap: 1rem;
+	line-height: 77px;
+	text-shadow: -1px 1px 1px black;
+	font-size: 1.5rem;
+	color: #0000ee;
+}

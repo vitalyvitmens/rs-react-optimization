@@ -1,0 +1,11 @@
+.App {
+	display: flex;
+	background-image: url(./assets/RickMorty.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	height: 100vh;
+	min-width: 100vh;
+	justify-content: space-around;
+	padding: 100px 0 40px 0;
+}
