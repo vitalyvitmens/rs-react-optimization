@@ -1,5 +1,6 @@
-import { AuthStatus } from '../../components/AuthStatus/AuthStatus'
+import { Suspense } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { AuthStatus } from '../../components'
 import logo from '../../assets/logo.jpg'
 import styles from './Navigation.module.css'
 
@@ -26,7 +27,9 @@ export const Navigation = () => {
 				<Link to="/episodes">Эпизоды</Link>
 			</div>
 
-			<Outlet />
+			<Suspense fallback={<h1>Loading...</h1>}>
+				<Outlet />
+			</Suspense>
 		</div>
 	)
 }
