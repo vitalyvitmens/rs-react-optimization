@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { Button, Navigation } from '../../components'
+import { Button } from '../../components'
 import { NotFound } from '../../pages'
 import { getCharacterName, getEpisodeName } from '../../utils'
 import styles from './Detail.module.css'
@@ -35,7 +35,6 @@ export const Detail = () => {
 
 	return (
 		<div className={styles.Detail}>
-			<Navigation />
 			{!data || loading ? (
 				<span>Загрузка...</span>
 			) : (
