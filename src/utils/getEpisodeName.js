@@ -1,7 +1,6 @@
-export async function getEpisodeName(number) {
+export async function getEpisodeName(number, characters) {
 	try {
-		const json = await import('../db.json')
-		const episode = json.episodes.find((ep) => ep.id === +number)
+		const episode = characters.find((ep) => ep.id === +number)
 		if (episode) {
 			return episode.name
 		}
