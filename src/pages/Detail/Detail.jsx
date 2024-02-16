@@ -1,74 +1,92 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components'
 import { NotFound } from '../../pages'
+import { useFetchCategory } from '../../hooks'
 import { getCharacterName, getEpisodeName } from '../../utils'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
-	const { category, id } = useParams()
+  const { loading, error, categories, hasMore, category, id } =
+  useFetchCategory()
 	const navigate = useNavigate()
-	const [data, setData] = useState({})
-	const [loading, setLoading] = useState(true)
 
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const json = await import('../../db.json')
-				const item = json[category]
-					? json[category].find((item) => item.id === Number(id))
-					: null
-				setData(item)
-				setLoading(false)
-			} catch (error) {
-				console.error(error)
-				setLoading(false)
-			}
-		}
+  if (loading) {
+    return <h2>Loading...</h2>
+  }
 
-		fetchData()
-	}, [category, id])
+	console.log('####: id', id)
+	console.log('####: loading', loading)
+	console.log(`####: category: ${category}`)
+	console.log(`####: ${category}`, categories)
+	console.log('####: characters.id', categories.name)
+	console.log('####: characters.name', categories.map((i) => i.name))
 
-	if (!data && !loading) {
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		try {
+	// 			const json = await import('../../db.json')
+	// 			const item = json[category]
+	// 				? json[category].find((item) => item.id === Number(id))
+	// 				: null
+	// 			setData(item)
+	// 			setLoading(false)
+	// 		} catch (error) {
+	// 			console.error(error)
+	// 			setLoading(false)
+	// 		}
+	// 	}
+
+	// 	fetchData()
+	// }, [category, id])
+
+	if (!categories && !loading) {
 		return <NotFound />
 	}
 
 	return (
 		<div className={styles.Detail}>
-			{!data || loading ? (
+			{!categories || loading ? (
 				<span>Загрузка...</span>
 			) : (
 				<div className={styles.row}>
-					{data.image && <img src={data.image} alt={data.name} />}
+					{categories.map((i) => i.image)[id - 1] && (
+						<img
+							src={categories.map((i) => i.image)[id - 1]}
+							alt={categories.map((i) => i.name)[id - 1]}
+						/>
+					)}
 					<div className={styles.column}>
-						<div className={styles.name}>{data.name}</div>
+						<div className={styles.name}>
+							{categories.map((i) => i.name)[id - 1] || 'нет'}
+						</div>
 						<div className={styles.body}>
 							{category === 'characters' && (
 								<div>
 									<p>
 										<span>Пол: </span>
-										{data.gender || 'нет'}
+										{categories.map((i) => i.gender)[id - 1] || 'нет'}
 									</p>
 									<p>
 										<span>Вид: </span>
-										{data.species || 'нет'}
+										{categories.map((i) => i.species)[id - 1] || 'нет'}
 									</p>
 									<p>
 										<span>Статус: </span>
-										{data.status || 'нет'}
+										{categories.map((i) => i.status)[id - 1] || 'нет'}
 									</p>
 									<p>
 										<span>Тип: </span>
-										{data.type || 'нет'}
+										{categories.map((i) => i.type)[id - 1] || 'нет'}
 									</p>
-									{data.episode && data.episode.length > 0 && (
+									{categories.episode && categories.episode.length > 0 && (
 										<ul>
-											{data.episode.map(
+											{categories.episode.map(
 												(ep) =>
 													ep && (
-														<li key={ep}>
+														<li key={ep.id}>
 															<Link to={`/characters/${ep}`}>
-																{getEpisodeName(ep)}
+																{getEpisodeName(ep, categories)}
 															</Link>
 														</li>
 													)
@@ -81,20 +99,20 @@ export const Detail = () => {
 								<div>
 									<p>
 										<span>Тип: </span>
-										{data.type || 'нет'}
+										{categories.map((i) => i.type)[id - 1] || 'нет'}
 									</p>
 									<p>
 										<span>Измерение: </span>
-										{data.dimension || 'нет'}
+										{categories.map((i) => i.dimension)[id - 1] || 'нет'}
 									</p>
-									{data.residents && data.residents.length > 0 && (
+									{categories.residents && categories.residents.length > 0 && (
 										<ul>
-											{data.residents.map(
+											{categories.residents.map(
 												(res) =>
 													res && (
-														<li key={res}>
+														<li key={categories.id}>
 															<Link to={`/locations/${res}`}>
-																{getCharacterName(res)}
+																{getCharacterName(res, categories)}
 															</Link>
 														</li>
 													)
@@ -107,26 +125,27 @@ export const Detail = () => {
 								<div>
 									<p>
 										<span>Номер эпизода: </span>
-										{data.episode || 'нет'}
+										{categories.map((i) => i.episode)[id - 1] || 'нет'}
 									</p>
 									<p>
 										<span>Дата выхода: </span>
-										{data.air_date || 'нет'}
+										{categories.map((i) => i.air_date)[id - 1] || 'нет'}
 									</p>
-									{data.characters && data.characters.length > 0 && (
-										<ul>
-											{data.characters.map(
-												(char) =>
-													char && (
-														<li key={char}>
-															<Link to={`/episodes/${char}`}>
-																{getCharacterName(char)}
-															</Link>
-														</li>
-													)
-											)}
-										</ul>
-									)}
+									{categories.characters &&
+										categories.characters.length > 0 && (
+											<ul>
+												{categories.characters.map(
+													(char) =>
+														char && (
+															<li key={char.id}>
+																<Link to={`/episodes/${char}`}>
+																	{getCharacterName(char, categories)}
+																</Link>
+															</li>
+														)
+												)}
+											</ul>
+										)}
 								</div>
 							)}
 						</div>
