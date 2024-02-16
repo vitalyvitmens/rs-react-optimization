@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams, useParams } from 'react-router-dom'
-import { Navigation, CustomSelect } from '../../components'
+import { CustomSelect } from '../../components'
 import { NotFound } from '../../pages'
 import styles from './Category.module.css'
 
@@ -54,7 +54,6 @@ export const Category = () => {
 
 	return (
 		<div className={styles.Category}>
-			<Navigation />
 			<form>
 				<CustomSelect
 					label="Сортировать по дате создания:"
