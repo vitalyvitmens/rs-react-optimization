@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Navigation } from '../../components'
 import styles from './NotFound.module.css'
 
 export const NotFound = () => {
 	return (
 		<div className={styles.NotFound}>
-			<Navigation />
 			<h1>Страница не найдена</h1>
 			<p>Извините, но запрашиваемая вами страница не существует.</p>
 			<p>
