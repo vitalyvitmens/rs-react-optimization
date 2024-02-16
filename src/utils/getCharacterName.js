@@ -1,7 +1,6 @@
-export async function getCharacterName(number) {
+export async function getCharacterName(number, characters) {
 	try {
-		const json = await import('../db.json')
-		const character = json.characters.find((char) => char.id === +number)
+		const character = characters.find((char) => char.id === +number)
 		if (character) {
 			return character.name
 		}
