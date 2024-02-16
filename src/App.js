@@ -1,9 +1,34 @@
 import { AuthProvider } from './context/AuthProvider'
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import { Home, Category, Detail, NotFound, Login } from './pages'
+import { Login } from './pages'
 import { PrivateRoute } from './components'
 import { Navigation } from './layout'
 import styles from './app.module.css'
+import { lazy } from 'react'
+
+// const Login = lazy(() =>
+//   import('./pages/Login/Login.jsx').then((module) => ({
+//     default: module.Login,
+//   }))
+// )
+const Home = lazy(() =>
+	import('./pages/Home/Home.jsx').then((module) => ({ default: module.Home }))
+)
+const Category = lazy(() =>
+	import('./pages/Category/Category.jsx').then((module) => ({
+		default: module.Category,
+	}))
+)
+const Detail = lazy(() =>
+	import('./pages/Detail/Detail.jsx').then((module) => ({
+		default: module.Detail,
+	}))
+)
+const NotFound = lazy(() =>
+	import('./pages/NotFound/NotFound.jsx').then((module) => ({
+		default: module.NotFound,
+	}))
+)
 
 export const App = () => {
 	return (
