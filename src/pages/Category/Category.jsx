@@ -9,7 +9,7 @@ export const Category = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const sort = searchParams.get('sort')
 	const [query, setQuery] = useState('')
-	const [pageNumber, setPageNumber] = useState(3)
+	const [pageNumber, setPageNumber] = useState(1)
 
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
