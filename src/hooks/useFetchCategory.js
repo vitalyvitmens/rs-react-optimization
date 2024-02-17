@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export function useFetchCategory(query, pageNumber) {
@@ -9,6 +9,7 @@ export function useFetchCategory(query, pageNumber) {
 	const [hasMore, setHasMore] = useState(true)
 	const { category, id } = useParams()
 	const [categorySlice, setCategorySlice] = useState(category?.slice(0, -1))
+	const navigate = useNavigate()
 	console.log(`####: categories.${category} from useFetchCategory`, categories)
 
 	useEffect(() => {
@@ -43,10 +44,11 @@ export function useFetchCategory(query, pageNumber) {
 
 				setError(false)
 				console.error(e)
+				navigate('/')
 			})
 
 		return () => cancel()
-	}, [category, categorySlice, pageNumber, query])
+	}, [category, categorySlice, navigate, pageNumber, query])
 
 	return {
 		loading,

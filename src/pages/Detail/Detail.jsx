@@ -9,6 +9,8 @@ import styles from './Detail.module.css'
 export const Detail = () => {
   const { loading, error, categories, hasMore, category, id } =
   useFetchCategory()
+  console.log(`####: categories.${category} from Detail`, categories)
+
 	const navigate = useNavigate()
 
   if (loading) {
