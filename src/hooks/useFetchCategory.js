@@ -57,5 +57,6 @@ export function useFetchCategory(query, pageNumber) {
 		hasMore,
 		category,
 		id,
+		pageNumber,
 	}
 }

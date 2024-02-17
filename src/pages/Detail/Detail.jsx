@@ -7,9 +7,11 @@ import { getCharacterName, getEpisodeName } from '../../utils'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
-  const { loading, error, categories, hasMore, category, id } =
+  const { loading, error, categories, hasMore, category, id, pageNumber } =
   useFetchCategory()
   console.log(`####: categories.${category} from Detail`, categories)
+	console.log(`####: pageNumber: ${pageNumber} from Detail`)
+	console.log(`####: id: ${id} from Detail`)
 
 	const navigate = useNavigate()
 
@@ -17,11 +19,6 @@ export const Detail = () => {
     return <h2>Loading...</h2>
   }
 
-	console.log('####: id', id)
-	console.log('####: loading', loading)
-	console.log(`####: category: ${category}`)
-	console.log(`####: ${category}`, categories)
-	console.log('####: characters.id', categories.name)
 	console.log('####: characters.name', categories.map((i) => i.name))
 
 	// useEffect(() => {

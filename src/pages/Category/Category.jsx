@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { CustomSelect } from '../../components'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { Button, CustomSelect } from '../../components'
 import { NotFound } from '../../pages'
 import { useFetchCategory } from '../../hooks'
 import styles from './Category.module.css'
@@ -10,6 +10,7 @@ export const Category = () => {
 	const sort = searchParams.get('sort')
 	const [query, setQuery] = useState('')
 	const [pageNumber, setPageNumber] = useState(1)
+	const navigate = useNavigate()
 
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
@@ -63,6 +64,8 @@ export const Category = () => {
 		setSearchParams({ sort: value })
 	}
 
+	const handlerScrollUp = () => window.scrollTo(0, 0)
+
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
 		return <NotFound />
 	}
@@ -103,7 +106,18 @@ export const Category = () => {
 					<div style={{ color: 'red', fontSize: '2rem' }}>Loading...</div>
 				)}
 				{!loading && !hasMore && (
-					<div style={{ color: 'blue', fontSize: '2rem' }}>Конец списка</div>
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'end',
+							color: 'blue',
+							fontSize: '2rem',
+						}}
+					>
+						Конец списка{' '}
+						<Button onClick={handlerScrollUp}>В начало списка</Button>
+						<Button onClick={() => navigate('/')}>На главную</Button>
+					</div>
 				)}
 				{error && <div>Error</div>}
 			</ul>
