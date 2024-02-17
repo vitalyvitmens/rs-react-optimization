@@ -11,10 +11,9 @@ export const Category = () => {
 	const [query, setQuery] = useState('')
 	const [pageNumber, setPageNumber] = useState(3)
 
-	const { loading, error, categories, hasMore, category, id } = useFetchCategory(
-		query,
-		pageNumber
-	)
+	const { loading, error, categories, hasMore, category, id } =
+		useFetchCategory(query, pageNumber)
+	console.log('####: categories', categories)
 
 	const observer = useRef()
 	const lastNodeRef = useCallback(
@@ -82,22 +81,29 @@ export const Category = () => {
 			</form>
 			<ul>
 				{sortByCreated(categories, sort).map((item, index) => {
-					if (categories.length - 20 === index + 1) {
+					if (categories.length - 5 === index + 1) {
 						return (
 							<li ref={lastNodeRef} key={item.id}>
-								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+								<Link style={{ color: 'green' }} to={`/${category}/${item.id}`}>
+									{item.name}
+								</Link>
 							</li>
 						)
 					} else {
 						return (
 							<li key={item.id}>
-								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+								<Link style={{ color: 'red' }} to={`/${category}/${item.id}`}>
+									{item.name}
+								</Link>
 							</li>
 						)
 					}
 				})}
-				{loading && (
+				{loading && hasMore && (
 					<div style={{ color: 'red', fontSize: '3rem' }}>Loading...</div>
+				)}
+				{!loading && !hasMore && (
+					<div style={{ color: 'blue', fontSize: '3rem' }}>Конец списка</div>
 				)}
 				{error && <div>Error</div>}
 			</ul>
