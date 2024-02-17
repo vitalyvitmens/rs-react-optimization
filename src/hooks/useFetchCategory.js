@@ -29,19 +29,10 @@ export function useFetchCategory(query, pageNumber) {
 		})
 			.then((res) => {
 				setCategories((prevState) => {
-					return [
-						...new Set([
-							...prevState,
-							...res.data.results,
-							// ...res.data.results.map((character) => character.name),
-						]),
-					]
+					return [...new Set([...prevState, ...res.data.results])]
 				})
 
-				setHasMore(
-					res.data.results.length > 0 && res.data.info.next !== null
-					// && res.info.pages === res.info.pages.length
-				)
+				setHasMore(res.data.results.length > 0 && res.data.info.next !== null)
 				setLoading(false)
 				// console.log('####: res', res.data.results)
 			})
@@ -55,7 +46,7 @@ export function useFetchCategory(query, pageNumber) {
 			})
 
 		return () => cancel()
-	}, [categorySlice, pageNumber, query])
+	}, [category, categorySlice, pageNumber, query])
 
 	return {
 		loading,
