@@ -10,7 +10,7 @@ export function useFetchCategory(query, pageNumber) {
 	const { category, id } = useParams()
 	const [categorySlice, setCategorySlice] = useState(category?.slice(0, -1))
 	const navigate = useNavigate()
-	console.log(`####: categories.${category} from useFetchCategory`, categories)
+	// console.log(`####: categories.${category} from useFetchCategory`, categories)
 
 	useEffect(() => {
 		setCategories([])
