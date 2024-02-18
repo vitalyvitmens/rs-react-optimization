@@ -14,7 +14,11 @@ export const Category = () => {
 
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
-	console.log(`####: categories.${category} from Category`, categories)
+	// console.log(`####: categories.${category} from Category`, categories)
+	// console.log(
+	// 	'####: characters.name from Category',
+	// 	categories.map((i) => i.name)
+	// )
 
 	const observer = useRef()
 	const lastNodeRef = useCallback(
