@@ -14,11 +14,6 @@ export const Category = () => {
 
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
-	// console.log(`####: categories.${category} from Category`, categories)
-	// console.log(
-	// 	'####: characters.name from Category',
-	// 	categories.map((i) => i.name)
-	// )
 
 	const observer = useRef()
 	const lastNodeRef = useCallback(
@@ -32,15 +27,12 @@ export const Category = () => {
 			observer.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting && hasMore) {
 					setPageNumber((prevState) => prevState + 1)
-					console.log('####: VISIBLE')
 				}
 			})
 
 			if (node) {
 				observer.current.observe(node)
 			}
-
-			console.log('####: node', node)
 		},
 		[hasMore, loading]
 	)
@@ -90,18 +82,14 @@ export const Category = () => {
 				{sortByCreated(categories, sort).map((item, index) => {
 					if (categories.length - 10 === index + 1) {
 						return (
-							<li ref={lastNodeRef} key={item.id}>
-								<Link style={{ color: 'green' }} to={`/${category}/${item.id}`}>
-									{item.name}
-								</Link>
+							<li ref={lastNodeRef} key={index}>
+								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
 							</li>
 						)
 					} else {
 						return (
-							<li key={item.id}>
-								<Link style={{ color: 'red' }} to={`/${category}/${item.id}`}>
-									{item.name}
-								</Link>
+							<li key={index}>
+								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
 							</li>
 						)
 					}
@@ -116,9 +104,11 @@ export const Category = () => {
 							alignItems: 'end',
 							color: 'blue',
 							fontSize: '2rem',
+							fontWeight: '600',
+							textShadow: '-2px 2px 2px black',
 						}}
 					>
-						Конец списка{' '}
+						Конец списка
 						<Button onClick={handlerScrollUp}>В начало списка</Button>
 						<Button onClick={() => navigate('/')}>На главную</Button>
 					</div>

@@ -1,10 +1,10 @@
 import { AuthProvider } from './context/AuthProvider'
+import { lazy } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import { Login } from './pages'
 import { PrivateRoute } from './components'
 import { Navigation } from './layout'
+import { Login } from './pages'
 import styles from './app.module.css'
-import { lazy } from 'react'
 
 // const Login = lazy(() =>
 //   import('./pages/Login/Login.jsx').then((module) => ({

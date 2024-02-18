@@ -10,7 +10,6 @@ export function useFetchCategory(query, pageNumber) {
 	const { category, id } = useParams()
 	const [categorySlice, setCategorySlice] = useState(category?.slice(0, -1))
 	const navigate = useNavigate()
-	// console.log(`####: categories.${category} from useFetchCategory`, categories)
 
 	useEffect(() => {
 		setCategories([])
@@ -35,7 +34,6 @@ export function useFetchCategory(query, pageNumber) {
 
 				setHasMore(res.data.results.length > 0 && res.data.info.next !== null)
 				setLoading(false)
-				// console.log('####: res', res.data.results)
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) {
@@ -57,6 +55,5 @@ export function useFetchCategory(query, pageNumber) {
 		hasMore,
 		category,
 		id,
-		pageNumber,
 	}
 }
