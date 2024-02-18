@@ -2,24 +2,24 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components'
 import { NotFound } from '../../pages'
-import { useFetchCategory } from '../../hooks'
+import { useFetchCategoryId } from '../../hooks'
 import { getCharacterName, getEpisodeName } from '../../utils'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
-  const { loading, error, categories, hasMore, category, id, pageNumber } =
-  useFetchCategory()
-  console.log(`####: categories.${category} from Detail`, categories)
+	const { loading, error, categoriesId, hasMore, category, id, pageNumber } =
+		useFetchCategoryId()
+	console.log(`####: categoriesId.${category} from Detail`, categoriesId)
 	console.log(`####: pageNumber: ${pageNumber} from Detail`)
-	console.log(`####: id: ${id} from Detail`)
+	// console.log(`####: id: ${id} from Detail`)
 
 	const navigate = useNavigate()
 
-  if (loading) {
-    return <h2>Loading...</h2>
-  }
+	if (loading || !categoriesId) {
+		return <h2>Loading...</h2>
+	}
 
-	console.log('####: characters.name', categories.map((i) => i.name))
+	console.log('####: characters.name', categoriesId.name)
 
 	// useEffect(() => {
 	// 	async function fetchData() {
@@ -39,112 +39,106 @@ export const Detail = () => {
 	// 	fetchData()
 	// }, [category, id])
 
-	if (!categories && !loading) {
+	if (!categoriesId && !loading) {
 		return <NotFound />
 	}
 
 	return (
 		<div className={styles.Detail}>
-			{!categories || loading ? (
+			{!categoriesId || loading ? (
 				<span>Загрузка...</span>
 			) : (
 				<div className={styles.row}>
-					{categories.map((i) => i.image)[id - 1] && (
-						<img
-							src={categories.map((i) => i.image)[id - 1]}
-							alt={categories.map((i) => i.name)[id - 1]}
-						/>
+					{categoriesId.image && (
+						<img src={categoriesId.image} alt={categoriesId.name} />
 					)}
 					<div className={styles.column}>
-						<div className={styles.name}>
-							{categories.map((i) => i.name)[id - 1] || 'нет'}
-						</div>
+						<div className={styles.name}>{categoriesId.name || 'нет'}</div>
 						<div className={styles.body}>
 							{category === 'characters' && (
-								<div>
+								<div key={categoriesId.id}>
 									<p>
 										<span>Пол: </span>
-										{categories.map((i) => i.gender)[id - 1] || 'нет'}
+										{categoriesId.gender || 'нет'}
 									</p>
 									<p>
 										<span>Вид: </span>
-										{categories.map((i) => i.species)[id - 1] || 'нет'}
+										{categoriesId.species || 'нет'}
 									</p>
 									<p>
 										<span>Статус: </span>
-										{categories.map((i) => i.status)[id - 1] || 'нет'}
+										{categoriesId.status || 'нет'}
 									</p>
 									<p>
 										<span>Тип: </span>
-										{categories.map((i) => i.type)[id - 1] || 'нет'}
+										{categoriesId.type || 'нет'}
 									</p>
-									{categories.episode && categories.episode.length > 0 && (
+									{/* {categoriesId && (
 										<ul>
-											{categories.episode.map(
+											{categoriesId.episode.map(
 												(ep) =>
 													ep && (
 														<li key={ep.id}>
 															<Link to={`/characters/${ep}`}>
-																{getEpisodeName(ep, categories)}
+																{getEpisodeName(ep, categoriesId)}
 															</Link>
 														</li>
 													)
 											)}
 										</ul>
-									)}
+									)} */}
 								</div>
 							)}
 							{category === 'locations' && (
 								<div>
 									<p>
 										<span>Тип: </span>
-										{categories.map((i) => i.type)[id - 1] || 'нет'}
+										{categoriesId.type || 'нет'}
 									</p>
 									<p>
 										<span>Измерение: </span>
-										{categories.map((i) => i.dimension)[id - 1] || 'нет'}
+										{categoriesId.dimension || 'нет'}
 									</p>
-									{categories.residents && categories.residents.length > 0 && (
+									{/* {categoriesId && (
 										<ul>
-											{categories.residents.map(
+											{categoriesId.residents.map(
 												(res) =>
 													res && (
-														<li key={categories.id}>
+														<li key={categoriesId.id}>
 															<Link to={`/locations/${res}`}>
-																{getCharacterName(res, categories)}
+																{getCharacterName(res, categoriesId)}
 															</Link>
 														</li>
 													)
 											)}
 										</ul>
-									)}
+									)} */}
 								</div>
 							)}
 							{category === 'episodes' && (
 								<div>
 									<p>
 										<span>Номер эпизода: </span>
-										{categories.map((i) => i.episode)[id - 1] || 'нет'}
+										{categoriesId.episode || 'нет'}
 									</p>
 									<p>
 										<span>Дата выхода: </span>
-										{categories.map((i) => i.air_date)[id - 1] || 'нет'}
+										{categoriesId.air_date || 'нет'}
 									</p>
-									{categories.characters &&
-										categories.characters.length > 0 && (
+									{/* {categoriesId && (
 											<ul>
-												{categories.characters.map(
+												{categoriesId.characters.map(
 													(char) =>
 														char && (
 															<li key={char.id}>
 																<Link to={`/episodes/${char}`}>
-																	{getCharacterName(char, categories)}
+																	{getCharacterName(char, categoriesId)}
 																</Link>
 															</li>
 														)
 												)}
 											</ul>
-										)}
+										)} */}
 								</div>
 							)}
 						</div>
