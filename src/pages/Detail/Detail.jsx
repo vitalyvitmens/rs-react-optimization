@@ -1,47 +1,21 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components'
 import { NotFound } from '../../pages'
 import { useFetchCategoryId } from '../../hooks'
-import { getCharacterName, getEpisodeName } from '../../utils'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
-	const { loading, error, categoriesId, hasMore, category, id, pageNumber } =
-		useFetchCategoryId()
-	console.log(`####: categoriesId.${category} from Detail`, categoriesId)
-	console.log(`####: pageNumber: ${pageNumber} from Detail`)
-	// console.log(`####: id: ${id} from Detail`)
-
+	const { loading, error, categoriesId, category } = useFetchCategoryId()
 	const navigate = useNavigate()
 
 	if (loading || !categoriesId) {
 		return <h2>Loading...</h2>
 	}
 
-	console.log('####: characters.name', categoriesId.name)
-
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		try {
-	// 			const json = await import('../../db.json')
-	// 			const item = json[category]
-	// 				? json[category].find((item) => item.id === Number(id))
-	// 				: null
-	// 			setData(item)
-	// 			setLoading(false)
-	// 		} catch (error) {
-	// 			console.error(error)
-	// 			setLoading(false)
-	// 		}
-	// 	}
-
-	// 	fetchData()
-	// }, [category, id])
-
 	if (!categoriesId && !loading) {
 		return <NotFound />
 	}
+	console.log(`####: categoriesId.${category} from Detail`, categoriesId)
 
 	return (
 		<div className={styles.Detail}>
@@ -53,25 +27,33 @@ export const Detail = () => {
 						<img src={categoriesId.image} alt={categoriesId.name} />
 					)}
 					<div className={styles.column}>
-						<div className={styles.name}>{categoriesId.name || 'нет'}</div>
+						<div className={styles.name}>{categoriesId.name || '🤷'}</div>
 						<div className={styles.body}>
 							{category === 'characters' && (
 								<div key={categoriesId.id}>
 									<p>
 										<span>Пол: </span>
-										{categoriesId.gender || 'нет'}
+										{categoriesId.gender === 'unknown'
+											? '🤷'
+											: categoriesId.gender || '🤷'}
 									</p>
 									<p>
 										<span>Вид: </span>
-										{categoriesId.species || 'нет'}
+										{categoriesId.species === 'unknown'
+											? '🤷'
+											: categoriesId.species || '🤷'}
 									</p>
 									<p>
 										<span>Статус: </span>
-										{categoriesId.status || 'нет'}
+										{categoriesId.status === 'unknown'
+											? '🤷'
+											: categoriesId.status || '🤷'}
 									</p>
 									<p>
 										<span>Тип: </span>
-										{categoriesId.type || 'нет'}
+										{categoriesId.type === 'unknown'
+											? '🤷'
+											: categoriesId.type || '🤷'}
 									</p>
 									{/* {categoriesId && (
 										<ul>
@@ -93,11 +75,15 @@ export const Detail = () => {
 								<div>
 									<p>
 										<span>Тип: </span>
-										{categoriesId.type || 'нет'}
+										{categoriesId.type === 'unknown'
+											? '🤷'
+											: categoriesId.type || '🤷'}
 									</p>
 									<p>
 										<span>Измерение: </span>
-										{categoriesId.dimension || 'нет'}
+										{categoriesId.dimension === 'unknown'
+											? '🤷'
+											: categoriesId.dimension || '🤷'}
 									</p>
 									{/* {categoriesId && (
 										<ul>
@@ -119,11 +105,15 @@ export const Detail = () => {
 								<div>
 									<p>
 										<span>Номер эпизода: </span>
-										{categoriesId.episode || 'нет'}
+										{categoriesId.episode === 'unknown'
+											? '🤷'
+											: categoriesId.episode || '🤷'}
 									</p>
 									<p>
 										<span>Дата выхода: </span>
-										{categoriesId.air_date || 'нет'}
+										{categoriesId.air_date === 'unknown'
+											? '🤷'
+											: categoriesId.air_date || '🤷'}
 									</p>
 									{/* {categoriesId && (
 											<ul>
@@ -141,6 +131,7 @@ export const Detail = () => {
 										)} */}
 								</div>
 							)}
+							{error && <div>Error</div>}
 						</div>
 					</div>
 				</div>
