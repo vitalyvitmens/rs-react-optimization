@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { Button } from '../../components'
 import { NotFound } from '../../pages'
 import { useFetchCategoryId } from '../../hooks'
@@ -15,7 +15,6 @@ export const Detail = () => {
 	if (!categoriesId && !loading) {
 		return <NotFound />
 	}
-	console.log(`####: categoriesId.${category} from Detail`, categoriesId)
 
 	return (
 		<div className={styles.Detail}>
@@ -23,7 +22,7 @@ export const Detail = () => {
 				<span>Загрузка...</span>
 			) : (
 				<div className={styles.row}>
-					{categoriesId.image && (
+					{categoriesId?.image && (
 						<img src={categoriesId.image} alt={categoriesId.name} />
 					)}
 					<div className={styles.column}>
@@ -55,20 +54,19 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.type || '🤷'}
 									</p>
-									{/* {categoriesId && (
-										<ul>
-											{categoriesId.episode.map(
-												(ep) =>
-													ep && (
-														<li key={ep.id}>
-															<Link to={`/characters/${ep}`}>
-																{getEpisodeName(ep, categoriesId)}
-															</Link>
-														</li>
-													)
-											)}
-										</ul>
-									)} */}
+									<span>Список эпизодов: </span>
+									{/* <ul>
+										{categoriesId?.episode?.map(
+											(episode, index) =>
+												episode && (
+													<li key={index}>
+														<Link to={`/episodes/${episode.slice(40)}`}>
+															{episode}
+														</Link>
+													</li>
+												)
+										)}
+									</ul> */}
 								</div>
 							)}
 							{category === 'locations' && (
@@ -85,20 +83,19 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.dimension || '🤷'}
 									</p>
-									{/* {categoriesId && (
-										<ul>
-											{categoriesId.residents.map(
-												(res) =>
-													res && (
-														<li key={categoriesId.id}>
-															<Link to={`/locations/${res}`}>
-																{getCharacterName(res, categoriesId)}
-															</Link>
-														</li>
-													)
-											)}
-										</ul>
-									)} */}
+									<span>Список жителей: </span>
+									<ul>
+										{categoriesId?.residents?.map(
+											(resident, index) =>
+												resident && (
+													<li key={index}>
+														<Link to={`/characters/${resident.slice(42)}`}>
+															{resident}
+														</Link>
+													</li>
+												)
+										)}
+									</ul>
 								</div>
 							)}
 							{category === 'episodes' && (
@@ -115,20 +112,19 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.air_date || '🤷'}
 									</p>
-									{/* {categoriesId && (
-											<ul>
-												{categoriesId.characters.map(
-													(char) =>
-														char && (
-															<li key={char.id}>
-																<Link to={`/episodes/${char}`}>
-																	{getCharacterName(char, categoriesId)}
-																</Link>
-															</li>
-														)
-												)}
-											</ul>
-										)} */}
+									<span>Список персонажей: </span>
+									<ul>
+										{categoriesId?.characters?.map(
+											(character, index) =>
+												character && (
+													<li key={index}>
+														<Link to={`/characters/${character.slice(42)}`}>
+															{character}
+														</Link>
+													</li>
+												)
+										)}
+									</ul>
 								</div>
 							)}
 							{error && <div>Error</div>}
