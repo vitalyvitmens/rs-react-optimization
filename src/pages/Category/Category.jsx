@@ -60,7 +60,10 @@ export const Category = () => {
 		setSearchParams({ sort: value })
 	}
 
-	const handlerScrollUp = () => window.scrollTo(0, 0)
+	const handlerScrollUp = () => {
+    window.scrollTo(0, 0)
+    setPageNumber(1)
+  }
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
 		return <NotFound />
