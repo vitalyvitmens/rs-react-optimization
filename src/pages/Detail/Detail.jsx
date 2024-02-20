@@ -3,9 +3,15 @@ import { Button } from '../../components'
 import { NotFound } from '../../pages'
 import { useFetchCategoryId } from '../../hooks'
 import styles from './Detail.module.css'
+import { useState } from 'react'
 
 export const Detail = () => {
-	const { loading, error, categoriesId, category } = useFetchCategoryId()
+	const [query, setQuery] = useState('')
+	const [pageNumber, setPageNumber] = useState(1)
+	const { loading, error, categoriesId, category, id } = useFetchCategoryId(
+		query,
+		pageNumber
+	)
 	const navigate = useNavigate()
 
 	if (loading || !categoriesId) {
@@ -14,6 +20,13 @@ export const Detail = () => {
 
 	if (!categoriesId && !loading) {
 		return <NotFound />
+	}
+
+	const handleNavigateBack = () => {
+		window.scrollTo(0, 0)
+		setQuery(id)
+		setPageNumber(1)
+		navigate(-1)
 	}
 
 	return (
@@ -150,7 +163,7 @@ export const Detail = () => {
 					</div>
 				</div>
 			)}
-			<Button onClick={() => navigate(-1)}>Вернуться назад к списку</Button>
+			<Button onClick={handleNavigateBack}>Вернуться назад к списку</Button>
 		</div>
 	)
 }
