@@ -67,9 +67,21 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.type || '🤷'}
 									</p>
-									<span>Список эпизодов: </span>
-									{/* <ul>
-										{categoriesId.episode?.length === 0 ? (
+									<p style={{ fontSize: '1.5rem' }}>
+										<span className={styles.name}>Расположение: </span>
+										{categoriesId?.location?.name === 'unknown'
+											? '🤷'
+											: categoriesId?.location?.name || '🤷'}
+									</p>
+									<Link
+										to={`/locations${categoriesId?.location?.url.slice(40)}`}
+									>
+										{categoriesId?.location?.url.slice(32)}
+									</Link>
+
+									{/* <span>Список эпизодов: </span>
+									<ul>
+										{categoriesId?.episode?.length === 0 ? (
 											<span style={{ color: 'red' }}>
 												Список эпизодов отсутствует!
 											</span>
@@ -102,14 +114,14 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.dimension || '🤷'}
 									</p>
-									<span>Список жителей: </span>
-									<ul>
+									<span className={styles.name}>Список жителей: </span>
+									<ol>
 										{categoriesId?.residents?.length === 0 ? (
 											<span style={{ color: 'red' }}>
 												Список жителей отсутствует!
 											</span>
 										) : (
-											categoriesId.residents?.map(
+											categoriesId?.residents?.map(
 												(resident, index) =>
 													resident && (
 														<li key={index}>
@@ -120,7 +132,7 @@ export const Detail = () => {
 													)
 											)
 										)}
-									</ul>
+									</ol>
 								</div>
 							)}
 							{category === 'episodes' && (
@@ -137,9 +149,9 @@ export const Detail = () => {
 											? '🤷'
 											: categoriesId.air_date || '🤷'}
 									</p>
-									<span>Список персонажей: </span>
-									<ul>
-										{categoriesId.characters?.length === 0 ? (
+									<span className={styles.name}>Список персонажей: </span>
+									<ol>
+										{categoriesId?.characters?.length === 0 ? (
 											<span style={{ color: 'red' }}>
 												Список персонажей отсутствует!
 											</span>
@@ -155,7 +167,7 @@ export const Detail = () => {
 													)
 											)
 										)}
-									</ul>
+									</ol>
 								</div>
 							)}
 							{error && <div>Error</div>}
