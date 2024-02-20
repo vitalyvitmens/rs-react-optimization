@@ -56,15 +56,21 @@ export const Detail = () => {
 									</p>
 									<span>Список эпизодов: </span>
 									{/* <ul>
-										{categoriesId?.episode?.map(
-											(episode, index) =>
-												episode && (
-													<li key={index}>
-														<Link to={`/episodes/${episode.slice(40)}`}>
-															{episode}
-														</Link>
-													</li>
-												)
+										{categoriesId.episode?.length === 0 ? (
+											<span style={{ color: 'red' }}>
+												Список эпизодов отсутствует!
+											</span>
+										) : (
+											categoriesId?.episode?.map(
+												(episode, index) =>
+													episode && (
+														<li key={index}>
+															<Link to={`/episodes/${episode.slice(40)}`}>
+																{episode}
+															</Link>
+														</li>
+													)
+											)
 										)}
 									</ul> */}
 								</div>
@@ -85,15 +91,21 @@ export const Detail = () => {
 									</p>
 									<span>Список жителей: </span>
 									<ul>
-										{categoriesId?.residents?.map(
-											(resident, index) =>
-												resident && (
-													<li key={index}>
-														<Link to={`/characters/${resident.slice(42)}`}>
-															{resident}
-														</Link>
-													</li>
-												)
+										{categoriesId?.residents?.length === 0 ? (
+											<span style={{ color: 'red' }}>
+												Список жителей отсутствует!
+											</span>
+										) : (
+											categoriesId.residents?.map(
+												(resident, index) =>
+													resident && (
+														<li key={index}>
+															<Link to={`/characters/${resident.slice(42)}`}>
+																{resident}
+															</Link>
+														</li>
+													)
+											)
 										)}
 									</ul>
 								</div>
@@ -114,15 +126,21 @@ export const Detail = () => {
 									</p>
 									<span>Список персонажей: </span>
 									<ul>
-										{categoriesId?.characters?.map(
-											(character, index) =>
-												character && (
-													<li key={index}>
-														<Link to={`/characters/${character.slice(42)}`}>
-															{character}
-														</Link>
-													</li>
-												)
+										{categoriesId.characters?.length === 0 ? (
+											<span style={{ color: 'red' }}>
+												Список персонажей отсутствует!
+											</span>
+										) : (
+											categoriesId?.characters?.map(
+												(character, index) =>
+													character && (
+														<li key={index}>
+															<Link to={`/characters/${character.slice(42)}`}>
+																{character}
+															</Link>
+														</li>
+													)
+											)
 										)}
 									</ul>
 								</div>
