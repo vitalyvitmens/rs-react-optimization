@@ -111,8 +111,7 @@ export const Category = () => {
 								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
 							</li>
 						)
-					}
-					if (index === 0) {
+					} else if (index === 0) {
 						return (
 							<li ref={firstNodeObserver} key={index}>
 								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
@@ -120,7 +119,7 @@ export const Category = () => {
 						)
 					} else {
 						return (
-							<li key={index}>
+							<li ref={lastNodeRef} key={index}>
 								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
 							</li>
 						)
