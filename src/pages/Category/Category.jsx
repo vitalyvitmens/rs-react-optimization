@@ -37,6 +37,28 @@ export const Category = () => {
 		[hasMore, loading]
 	)
 
+	const firstNodeRef = useRef()
+	const firstNodeObserver = useCallback(
+		(node) => {
+			if (loading) return
+
+			if (firstNodeRef.current) {
+				firstNodeRef.current.disconnect()
+			}
+
+			firstNodeRef.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					setPageNumber(1)
+				}
+			})
+
+			if (node) {
+				firstNodeRef.current.observe(node)
+			}
+		},
+		[loading]
+	)
+
 	const sortByCreated = (array, order) => {
 		const copy = [...(array || [])]
 		copy.sort((a, b) => {
@@ -61,9 +83,9 @@ export const Category = () => {
 	}
 
 	const handlerScrollUp = () => {
-    window.scrollTo(0, 0)
-    setPageNumber(1)
-  }
+		window.scrollTo(0, 0)
+		setPageNumber(1)
+	}
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
 		return <NotFound />
@@ -83,9 +105,16 @@ export const Category = () => {
 			</form>
 			<ul>
 				{sortByCreated(categories, sort).map((item, index) => {
-					if (categories.length - 10 === index + 1) {
+					if (categories.length - 5 === index + 1) {
 						return (
 							<li ref={lastNodeRef} key={index}>
+								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+							</li>
+						)
+					}
+					if (index === 0) {
+						return (
+							<li ref={firstNodeObserver} key={index}>
 								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
 							</li>
 						)
