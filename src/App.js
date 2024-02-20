@@ -7,7 +7,7 @@ import { Login } from './pages'
 import styles from './app.module.css'
 
 // const Login = lazy(() =>
-//   import('./pages/Login/Login.jsx').then((module) => ({
+//   import('./pages').then((module) => ({
 //     default: module.Login,
 //   }))
 // )
