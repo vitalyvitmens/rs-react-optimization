@@ -79,7 +79,7 @@ export const Detail = () => {
 													episode && (
 														<li key={index}>
 															<Link to={`/episodes/${episode.slice(40)}`}>
-																{episode}
+																{episode.slice(32)}
 															</Link>
 														</li>
 													)
@@ -114,7 +114,7 @@ export const Detail = () => {
 													resident && (
 														<li key={index}>
 															<Link to={`/characters/${resident.slice(42)}`}>
-																{resident}
+																{resident.slice(32)}
 															</Link>
 														</li>
 													)
@@ -149,7 +149,7 @@ export const Detail = () => {
 													character && (
 														<li key={index}>
 															<Link to={`/characters/${character.slice(42)}`}>
-																{character}
+																{character.slice(32)}
 															</Link>
 														</li>
 													)
