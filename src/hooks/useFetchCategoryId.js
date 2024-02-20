@@ -19,9 +19,11 @@ export function useFetchCategoryId() {
 		setLoading(true)
 		setError(false)
 
+		let cancel
 		axios({
 			method: 'GET',
 			url: `https://rickandmortyapi.com/api/${categorySlice}/${id}`,
+			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
 			.then((res) => {
 				setCategoriesId(res.data)
@@ -29,10 +31,11 @@ export function useFetchCategoryId() {
 				setLoading(false)
 			})
 			.catch((e) => {
-				setError(false)
-				console.error(e)
-				navigate('/')
+				if (axios.isCancel(e)) {
+					return
+				}
 			})
+		return () => cancel()
 	}, [category, categorySlice, id, navigate])
 
 	return {
