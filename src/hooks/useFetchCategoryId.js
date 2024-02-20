@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-export function useFetchCategoryId() {
+export function useFetchCategoryId(query, pageNumber) {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(false)
 	const [categoriesId, setCategoriesId] = useState({})
@@ -13,7 +13,7 @@ export function useFetchCategoryId() {
 	useEffect(() => {
 		setCategoriesId({})
 		setCategorySlice(category?.slice(0, -1))
-	}, [category])
+	}, [category, query])
 
 	useEffect(() => {
 		setLoading(true)
@@ -23,6 +23,7 @@ export function useFetchCategoryId() {
 		axios({
 			method: 'GET',
 			url: `https://rickandmortyapi.com/api/${categorySlice}/${id}`,
+			params: { q: query, page: pageNumber },
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
 			.then((res) => {
@@ -36,7 +37,7 @@ export function useFetchCategoryId() {
 				}
 			})
 		return () => cancel()
-	}, [category, categorySlice, id, navigate])
+	}, [category, categorySlice, id, navigate, pageNumber, query])
 
 	return {
 		loading,
