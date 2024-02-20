@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button } from '../../components'
 import { NotFound } from '../../pages'
 import { useFetchCategoryId } from '../../hooks'
 import styles from './Detail.module.css'
-import { useState } from 'react'
 
 export const Detail = () => {
 	const [query, setQuery] = useState('')
@@ -98,6 +98,7 @@ export const Detail = () => {
 											)
 										)}
 									</ul> */}
+                  
 								</div>
 							)}
 							{category === 'locations' && (

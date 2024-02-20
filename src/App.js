@@ -12,20 +12,20 @@ import styles from './app.module.css'
 //   }))
 // )
 const Home = lazy(() =>
-	import('./pages/Home/Home.jsx').then((module) => ({ default: module.Home }))
+	import('./pages').then((module) => ({ default: module.Home }))
 )
 const Category = lazy(() =>
-	import('./pages/Category/Category.jsx').then((module) => ({
+	import('./pages').then((module) => ({
 		default: module.Category,
 	}))
 )
 const Detail = lazy(() =>
-	import('./pages/Detail/Detail.jsx').then((module) => ({
+	import('./pages').then((module) => ({
 		default: module.Detail,
 	}))
 )
 const NotFound = lazy(() =>
-	import('./pages/NotFound/NotFound.jsx').then((module) => ({
+	import('./pages').then((module) => ({
 		default: module.NotFound,
 	}))
 )
