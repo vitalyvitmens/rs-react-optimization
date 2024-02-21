@@ -3,7 +3,11 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
 import { NotFound } from '../../pages/NotFound/NotFound'
-import { useFetchCategoryId } from '../../hooks'
+import {
+	useFetchEpisodes,
+	useFetchCharacters,
+	useFetchCategoryId,
+} from '../../hooks'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
@@ -14,6 +18,8 @@ export const Detail = () => {
 		query,
 		pageNumber
 	)
+	const { episodes } = useFetchEpisodes()
+	const { characters } = useFetchCharacters()
 	const navigate = useNavigate()
 
 	if (loading || !categoriesId) {
@@ -83,8 +89,8 @@ export const Detail = () => {
 										{categoriesId?.location?.url.slice(32)}
 									</Link>
 
-									{/* <span>Список эпизодов: </span>
-									<ul>
+									<span className={styles.name}>Список эпизодов: </span>
+									{/* <ol>
 										{categoriesId?.episode?.length === 0 ? (
 											<span style={{ color: 'red' }}>
 												Список эпизодов отсутствует!
@@ -92,16 +98,21 @@ export const Detail = () => {
 										) : (
 											categoriesId?.episode?.map(
 												(episode, index) =>
-													episode && (
-														<li key={index}>
-															<Link to={`/episodes/${episode.slice(40)}`}>
-																{episode.slice(32)}
-															</Link>
-														</li>
+													episode &&
+													episodes?.map(
+														(i) =>
+															i.id === Number(episode.slice(41)) && (
+																<li key={index}>
+																	<Link to={`/episodes/${episode.slice(41)}`}>
+																		{i.name}
+																	</Link>
+																</li>
+															)
 													)
 											)
 										)}
-									</ul> */}
+									</ol> */}
+                  
 								</div>
 							)}
 							{category === 'locations' && (
@@ -127,12 +138,18 @@ export const Detail = () => {
 										) : (
 											categoriesId?.residents?.map(
 												(resident, index) =>
-													resident && (
-														<li key={index}>
-															<Link to={`/characters/${resident.slice(42)}`}>
-																{resident.slice(32)}
-															</Link>
-														</li>
+													resident &&
+													characters?.map(
+														(i) =>
+															i.id === Number(resident.slice(42)) && (
+																<li key={index}>
+																	<Link
+																		to={`/characters/${resident.slice(42)}`}
+																	>
+																		{i.name}
+																	</Link>
+																</li>
+															)
 													)
 											)
 										)}
@@ -162,12 +179,18 @@ export const Detail = () => {
 										) : (
 											categoriesId?.characters?.map(
 												(character, index) =>
-													character && (
-														<li key={index}>
-															<Link to={`/characters/${character.slice(42)}`}>
-																{character.slice(32)}
-															</Link>
-														</li>
+													character &&
+													characters?.map(
+														(i) =>
+															i.id === Number(character.slice(42)) && (
+																<li key={index}>
+																	<Link
+																		to={`/characters/${character.slice(42)}`}
+																	>
+																		{i.name}
+																	</Link>
+																</li>
+															)
 													)
 											)
 										)}
