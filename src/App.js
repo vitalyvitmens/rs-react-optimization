@@ -2,7 +2,6 @@ import { AuthProvider } from './context/AuthProvider'
 import { lazy } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './components'
-import { Navigation } from './layout'
 import { Login } from './pages'
 import styles from './app.module.css'
 
@@ -11,21 +10,26 @@ import styles from './app.module.css'
 //     default: module.Login,
 //   }))
 // )
+const Navigation = lazy(() =>
+	import('./layout/Navigation/Navigation').then((module) => ({
+		default: module.Navigation,
+	}))
+)
 const Home = lazy(() =>
-	import('./pages').then((module) => ({ default: module.Home }))
+	import('./pages/Home/Home').then((module) => ({ default: module.Home }))
 )
 const Category = lazy(() =>
-	import('./pages').then((module) => ({
+	import('./pages/Category/Category').then((module) => ({
 		default: module.Category,
 	}))
 )
 const Detail = lazy(() =>
-	import('./pages').then((module) => ({
+	import('./pages/Detail/Detail').then((module) => ({
 		default: module.Detail,
 	}))
 )
 const NotFound = lazy(() =>
-	import('./pages').then((module) => ({
+	import('./pages/NotFound/NotFound').then((module) => ({
 		default: module.NotFound,
 	}))
 )

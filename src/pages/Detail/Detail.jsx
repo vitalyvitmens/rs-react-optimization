@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button } from '../../components'
-import { NotFound } from '../../pages'
+import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategoryId } from '../../hooks'
 import styles from './Detail.module.css'
 
@@ -98,7 +98,6 @@ export const Detail = () => {
 											)
 										)}
 									</ul> */}
-                  
 								</div>
 							)}
 							{category === 'locations' && (

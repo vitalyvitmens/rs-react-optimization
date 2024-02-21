@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { Button, CustomSelect } from '../../components'
-import { NotFound } from '../../pages'
+import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategory } from '../../hooks'
 import styles from './Category.module.css'
 
