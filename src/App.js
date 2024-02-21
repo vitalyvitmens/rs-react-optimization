@@ -2,14 +2,13 @@ import { AuthProvider } from './context/AuthProvider'
 import { lazy } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './components'
-import { Login } from './pages'
 import styles from './app.module.css'
 
-// const Login = lazy(() =>
-//   import('./pages').then((module) => ({
-//     default: module.Login,
-//   }))
-// )
+const Login = lazy(() =>
+	import('./pages/Login/Login').then((module) => ({
+		default: module.Login,
+	}))
+)
 const Navigation = lazy(() =>
 	import('./layout/Navigation/Navigation').then((module) => ({
 		default: module.Navigation,
