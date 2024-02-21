@@ -81,13 +81,16 @@ export const Detail = () => {
 										<span className={styles.name}>Расположение: </span>
 										{categoriesId?.location?.name === 'unknown'
 											? '🤷'
-											: categoriesId?.location?.name || '🤷'}
+											: (
+													<Link
+														to={`/locations${categoriesId?.location?.url.slice(
+															40
+														)}`}
+													>
+														{categoriesId?.location?.name}
+													</Link>
+											  ) || '🤷'}
 									</p>
-									<Link
-										to={`/locations${categoriesId?.location?.url.slice(40)}`}
-									>
-										{categoriesId?.location?.url.slice(32)}
-									</Link>
 								</div>
 							)}
 							{category === 'locations' && (
@@ -111,17 +114,18 @@ export const Detail = () => {
 												Список жителей отсутствует!
 											</span>
 										) : (
+											Array.isArray(categoriesId?.residents) &&
 											categoriesId?.residents?.map(
-												(resident, index) =>
+												(resident) =>
 													resident &&
 													characters?.map(
-														(i) =>
-															i.id === Number(resident.slice(42)) && (
+														(item, index) =>
+															item.id === Number(resident.slice(42)) && (
 																<li key={index}>
 																	<Link
 																		to={`/characters/${resident.slice(42)}`}
 																	>
-																		{i.name}
+																		{item.name}
 																	</Link>
 																</li>
 															)
@@ -152,17 +156,18 @@ export const Detail = () => {
 												Список персонажей отсутствует!
 											</span>
 										) : (
+											Array.isArray(categoriesId?.characters) &&
 											categoriesId?.characters?.map(
-												(character, index) =>
+												(character) =>
 													character &&
 													characters?.map(
-														(i) =>
-															i.id === Number(character.slice(42)) && (
+														(item, index) =>
+															item.id === Number(character.slice(42)) && (
 																<li key={index}>
 																	<Link
 																		to={`/characters/${character.slice(42)}`}
 																	>
-																		{i.name}
+																		{item.name}
 																	</Link>
 																</li>
 															)
@@ -181,6 +186,8 @@ export const Detail = () => {
 				<div
 					style={{
 						color: '#161bb6',
+						marginTop: '-2rem',
+						marginLeft: '1.5rem',
 						fontSize: '1.2rem',
 						fontWeight: '600',
 						textAlign: 'start',
@@ -193,69 +200,24 @@ export const Detail = () => {
 							<span style={{ color: 'red' }}>Список эпизодов отсутствует!</span>
 						) : (
 							Array.isArray(categoriesId?.episode) &&
-							categoriesId?.episode?.map(
-								(episode, index) =>
-									episode && (
-										<li key={index}>
-											<Link to={`/episodes/${episode.slice(40)}`}>
-												{episode.slice(32)}
-											</Link>
-										</li>
+							categoriesId?.episode.map(
+								(episode) =>
+									episode &&
+									episodes?.map(
+										(item, index) =>
+											item.id === Number(episode.slice(40)) && (
+												<li key={index}>
+													<Link to={`/episodes/${episode.slice(40)}`}>
+														{item.episode} {item.name}
+													</Link>
+												</li>
+											)
 									)
 							)
 						)}
 					</ol>
-          
-					{/* <ol>
-										{categoriesId?.episode?.length === 0 ? (
-											<span style={{ color: 'red' }}>
-												Список эпизодов отсутствует!
-											</span>
-										) : (
-											categoriesId?.episode?.map(
-												(episode, index) =>
-													episode &&
-													episodes?.map(
-														(i) =>
-															i.id === Number(episode.slice(41)) && (
-																<li key={index}>
-																	<Link to={`/episodes/${episode.slice(41)}`}>
-																		{i.name}
-																	</Link>
-																</li>
-															)
-													)
-											)
-										)}
-									</ol> */}
-
-					{/* <ol>
-										{categoriesId?.episode?.length === 0 ? (
-											<span style={{ color: 'red' }}>
-												Список эпизодов отсутствует!
-											</span>
-										) : (
-											// проверяем, является ли categoriesId.episode массивом
-											Array.isArray(categoriesId?.episode) &&
-											categoriesId?.episode.map(
-												(episode, index) =>
-													episode &&
-													episodes?.map(
-														(i) =>
-															i.id === Number(episode.slice(41)) && (
-																<li key={index}>
-																	<Link to={`/episodes/${episode.slice(41)}`}>
-																		{i.name} - {episode.slice(41)}
-																	</Link>
-																</li>
-															)
-													)
-											)
-										)}
-									</ol> */}
 				</div>
 			)}
-
 			<Component
 				component={Button}
 				title="Вернуться назад к списку"
