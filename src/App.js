@@ -2,6 +2,7 @@ import { AuthProvider } from './context/AuthProvider'
 import { lazy } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute'
+import ErrorBoundary from './ErrorBoundary'
 import styles from './app.module.css'
 
 const Login = lazy(() =>
@@ -39,13 +40,21 @@ export const App = () => {
 			<HashRouter>
 				<AuthProvider>
 					<Routes>
-						<Route element={<Navigation />}>
+						<Route
+							element={
+								<ErrorBoundary>
+									<Navigation />
+								</ErrorBoundary>
+							}
+						>
 							<Route path="/" element={<Home />} />
 							<Route
 								path="/:category"
 								element={
 									<PrivateRoute>
-										<Category />
+										<ErrorBoundary>
+											<Category />
+										</ErrorBoundary>
 									</PrivateRoute>
 								}
 							/>
@@ -53,13 +62,29 @@ export const App = () => {
 								path="/:category/:id"
 								element={
 									<PrivateRoute>
-										<Detail />
+										<ErrorBoundary>
+											<Detail />
+										</ErrorBoundary>
 									</PrivateRoute>
 								}
 							/>
-							<Route path="*" element={<NotFound />} />
+							<Route
+								path="*"
+								element={
+									<ErrorBoundary>
+										<NotFound />
+									</ErrorBoundary>
+								}
+							/>
 						</Route>
-						<Route path="/login" element={<Login />} />
+						<Route
+							path="/login"
+							element={
+								<ErrorBoundary>
+									<Login />
+								</ErrorBoundary>
+							}
+						/>
 					</Routes>
 				</AuthProvider>
 			</HashRouter>
