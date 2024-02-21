@@ -1,7 +1,9 @@
 import { useAuth } from '../../context/AuthProvider'
 import { useEffect, useTransition } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Button, CustomInput } from '../../components'
+import { Component } from '../../components/Component/Component'
+import { Button } from '../../components/Button/Button'
+import { CustomInput } from '../../components/CustomInput/CustomInput'
 import styles from './Login.module.css'
 
 export const Login = () => {
@@ -35,7 +37,8 @@ export const Login = () => {
 	return (
 		<div className={styles.Login}>
 			<form onSubmit={handleSubmit}>
-				<CustomInput
+				<Component
+					component={CustomInput}
 					label={'USERNAME'}
 					type="text"
 					id="text"
@@ -45,7 +48,12 @@ export const Login = () => {
 					radius={5}
 					size={20}
 				/>
-				<Button type="submit">Login</Button>
+				<Component
+					component={Button}
+					title="Login"
+					disabled={isPending}
+					type="submit"
+				/>
 			</form>
 			{isPending && <div>Загрузка...</div>}
 		</div>

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Button } from '../../components'
+import { Component } from '../../components/Component/Component'
+import { Button } from '../../components/Button/Button'
 import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategoryId } from '../../hooks'
 import styles from './Detail.module.css'
@@ -8,6 +9,7 @@ import styles from './Detail.module.css'
 export const Detail = () => {
 	const [query, setQuery] = useState('')
 	const [pageNumber, setPageNumber] = useState(1)
+	const [isPending, startTransition] = useTransition()
 	const { loading, error, categoriesId, category, id } = useFetchCategoryId(
 		query,
 		pageNumber
@@ -24,9 +26,11 @@ export const Detail = () => {
 
 	const handleNavigateBack = () => {
 		window.scrollTo(0, 0)
-		setQuery(id)
-		setPageNumber(1)
-		navigate(-1)
+		startTransition(() => {
+			setQuery(id)
+			setPageNumber(1)
+			navigate(-1)
+		})
 	}
 
 	return (
@@ -175,7 +179,13 @@ export const Detail = () => {
 					</div>
 				</div>
 			)}
-			<Button onClick={handleNavigateBack}>Вернуться назад к списку</Button>
+			<Component
+				component={Button}
+				title="Вернуться назад к списку"
+				disabled={isPending}
+				onClick={handleNavigateBack}
+			/>
+			{isPending && <div>Загрузка...</div>}
 		</div>
 	)
 }

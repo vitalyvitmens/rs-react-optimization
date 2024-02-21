@@ -1,6 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useTransition } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
-import { Button, CustomSelect } from '../../components'
+import { Component } from '../../components/Component/Component'
+import { Button } from '../../components/Button/Button'
+import { CustomSelect } from '../../components/CustomSelect/CustomSelect'
 import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategory } from '../../hooks'
 import styles from './Category.module.css'
@@ -11,6 +13,7 @@ export const Category = () => {
 	const [query, setQuery] = useState('')
 	const [pageNumber, setPageNumber] = useState(1)
 	const navigate = useNavigate()
+	const [isPending, startTransition] = useTransition()
 
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
@@ -77,14 +80,18 @@ export const Category = () => {
 
 	const handleChangeSort = (event) => {
 		const value = event.target.value
-		setQuery(id)
-		setPageNumber(1)
-		setSearchParams({ sort: value })
+		startTransition(() => {
+			setQuery(id)
+			setPageNumber(1)
+			setSearchParams({ sort: value })
+		})
 	}
 
 	const handlerScrollUp = () => {
 		window.scrollTo(0, 0)
-		setPageNumber(1)
+		startTransition(() => {
+			setPageNumber(1)
+		})
 	}
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
@@ -94,7 +101,8 @@ export const Category = () => {
 	return (
 		<div className={styles.Category}>
 			<form>
-				<CustomSelect
+				<Component
+					component={CustomSelect}
 					label="Сортировать по дате создания:"
 					type="select"
 					id="select"
@@ -140,8 +148,19 @@ export const Category = () => {
 						}}
 					>
 						Конец списка
-						<Button onClick={handlerScrollUp}>В начало списка</Button>
-						<Button onClick={() => navigate('/')}>На главную</Button>
+						<Component
+							component={Button}
+							title="В начало списка"
+							disabled={isPending}
+							onClick={handlerScrollUp}
+						/>
+						<Component
+							component={Button}
+							title="На главную"
+							disabled={isPending}
+							onClick={() => navigate('/')}
+						/>
+						{isPending && <div>Загрузка...</div>}
 					</div>
 				)}
 				{error && <div>Error</div>}

@@ -1,6 +1,7 @@
 import { useAuth } from '../../context/AuthProvider'
 import { useEffect, useTransition } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Component } from '../Component/Component'
 import { Button } from '../Button/Button'
 import styles from './AuthStatus.module.css'
 
@@ -29,7 +30,13 @@ export function AuthStatus() {
 		return (
 			<div className={styles.authStatus}>
 				Вы не авторизованы!
-				<Button onClick={() => {}}>Авторизоваться</Button>
+				<Component
+					component={Button}
+					title="Авторизоваться"
+					disabled={isPending}
+					onClick={() => {}}
+				/>
+				{isPending && <div>Загрузка...</div>}
 			</div>
 		)
 	}
@@ -37,7 +44,12 @@ export function AuthStatus() {
 	return (
 		<div className={styles.authStatus}>
 			Добро пожаловать <span style={{ fontWeight: 'bold' }}>{auth.user}</span>
-			<Button onClick={handleSignout}>Выйти</Button>
+			<Component
+				component={Button}
+				title="Выйти"
+				disabled={isPending}
+				onClick={handleSignout}
+			/>
 			{isPending && <div>Загрузка...</div>}
 		</div>
 	)

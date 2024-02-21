@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { AuthStatus } from '../../components'
+import { Component } from '../../components/Component/Component'
+import { AuthStatus } from '../../components/AuthStatus/AuthStatus'
 import logo from '../../assets/logo.jpg'
 import styles from './Navigation.module.css'
 
@@ -19,7 +20,7 @@ export const Navigation = () => {
 				/>
 			</Link>
 			<div className={styles.authCenter}>
-				<AuthStatus />
+				<Component component={AuthStatus} />
 			</div>
 			<div className={styles.center}>
 				<Link to="/characters">Герои</Link>

@@ -1,18 +1,9 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
-const ComponentName = (name) => {
-	return React.lazy(() =>
-		import(`../../components/${name}`).then((module) => ({
-			default: module[name],
-		}))
-	)
-}
-export function Component(props) {
-	const Component = ComponentName(props.name)
-
+export function Component({ component: Component, ...otherProps }) {
 	return (
 		<Suspense fallback="Загрузка...">
-			<Component {...props}/>
+			<Component {...otherProps} />
 		</Suspense>
 	)
 }
