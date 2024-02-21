@@ -88,76 +88,6 @@ export const Detail = () => {
 									>
 										{categoriesId?.location?.url.slice(32)}
 									</Link>
-
-									<span className={styles.name}>Список эпизодов: </span>
-									<ol>
-										{categoriesId?.episode?.length === 0 ? (
-											<span style={{ color: 'red' }}>
-												Список эпизодов отсутствует!
-											</span>
-										) : (
-											Array.isArray(categoriesId?.episode) &&
-											categoriesId?.episode?.map(
-												(episode, index) =>
-													episode && (
-														<li key={index}>
-															<Link to={`/episodes/${episode.slice(40)}`}>
-																{episode.slice(32)}
-															</Link>
-														</li>
-													)
-											)
-										)}
-									</ol>
-
-									{/* <ol>
-										{categoriesId?.episode?.length === 0 ? (
-											<span style={{ color: 'red' }}>
-												Список эпизодов отсутствует!
-											</span>
-										) : (
-											categoriesId?.episode?.map(
-												(episode, index) =>
-													episode &&
-													episodes?.map(
-														(i) =>
-															i.id === Number(episode.slice(41)) && (
-																<li key={index}>
-																	<Link to={`/episodes/${episode.slice(41)}`}>
-																		{i.name}
-																	</Link>
-																</li>
-															)
-													)
-											)
-										)}
-									</ol> */}
-
-									{/* <ol>
-										{categoriesId?.episode?.length === 0 ? (
-											<span style={{ color: 'red' }}>
-												Список эпизодов отсутствует!
-											</span>
-										) : (
-											// проверяем, является ли categoriesId.episode массивом
-											Array.isArray(categoriesId?.episode) &&
-											categoriesId?.episode.map(
-												(episode, index) =>
-													episode &&
-													episodes?.map(
-														(i) =>
-															i.id === Number(episode.slice(41)) && (
-																<li key={index}>
-																	<Link to={`/episodes/${episode.slice(41)}`}>
-																		{i.name} - {episode.slice(41)}
-																	</Link>
-																</li>
-															)
-													)
-											)
-										)}
-									</ol> */}
-                  
 								</div>
 							)}
 							{category === 'locations' && (
@@ -247,6 +177,85 @@ export const Detail = () => {
 					</div>
 				</div>
 			)}
+			{category === 'characters' && (
+				<div
+					style={{
+						color: '#161bb6',
+						fontSize: '1.2rem',
+						fontWeight: '600',
+						textAlign: 'start',
+						textShadow: '-1px 1px 1px black',
+					}}
+				>
+					<span className={styles.name}>Список эпизодов: </span>
+					<ol>
+						{categoriesId?.episode?.length === 0 ? (
+							<span style={{ color: 'red' }}>Список эпизодов отсутствует!</span>
+						) : (
+							Array.isArray(categoriesId?.episode) &&
+							categoriesId?.episode?.map(
+								(episode, index) =>
+									episode && (
+										<li key={index}>
+											<Link to={`/episodes/${episode.slice(40)}`}>
+												{episode.slice(32)}
+											</Link>
+										</li>
+									)
+							)
+						)}
+					</ol>
+          
+					{/* <ol>
+										{categoriesId?.episode?.length === 0 ? (
+											<span style={{ color: 'red' }}>
+												Список эпизодов отсутствует!
+											</span>
+										) : (
+											categoriesId?.episode?.map(
+												(episode, index) =>
+													episode &&
+													episodes?.map(
+														(i) =>
+															i.id === Number(episode.slice(41)) && (
+																<li key={index}>
+																	<Link to={`/episodes/${episode.slice(41)}`}>
+																		{i.name}
+																	</Link>
+																</li>
+															)
+													)
+											)
+										)}
+									</ol> */}
+
+					{/* <ol>
+										{categoriesId?.episode?.length === 0 ? (
+											<span style={{ color: 'red' }}>
+												Список эпизодов отсутствует!
+											</span>
+										) : (
+											// проверяем, является ли categoriesId.episode массивом
+											Array.isArray(categoriesId?.episode) &&
+											categoriesId?.episode.map(
+												(episode, index) =>
+													episode &&
+													episodes?.map(
+														(i) =>
+															i.id === Number(episode.slice(41)) && (
+																<li key={index}>
+																	<Link to={`/episodes/${episode.slice(41)}`}>
+																		{i.name} - {episode.slice(41)}
+																	</Link>
+																</li>
+															)
+													)
+											)
+										)}
+									</ol> */}
+				</div>
+			)}
+
 			<Component
 				component={Button}
 				title="Вернуться назад к списку"
