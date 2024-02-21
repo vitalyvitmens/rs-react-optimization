@@ -23,7 +23,19 @@ class ErrorBoundary extends Component {
 
 	render() {
 		if (this.state.hasError) {
-			return <h4>Что-то пошло не так!</h4>
+			return (
+				<div
+					style={{
+						display: 'flex',
+						margin: 'auto',
+						color: 'red',
+						fontSize: '3rem',
+						fontWeight: 'bold',
+					}}
+				>
+					Что-то пошло не так!
+				</div>
+			)
 		}
 
 		return this.props.children
