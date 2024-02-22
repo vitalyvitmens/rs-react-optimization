@@ -111,7 +111,7 @@ export const Category = () => {
 					onChange={handleChangeSort}
 				/>
 			</form>
-			<ol>
+			<ol style={{ marginLeft: '2rem'}}>
 				{sortByCreated(categories, sort).map((item, index) => {
 					const isCharacter = category === 'characters'
 					const imgStyle = isCharacter && {

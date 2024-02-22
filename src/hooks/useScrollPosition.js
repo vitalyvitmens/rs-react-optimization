@@ -1,5 +1,5 @@
 // В файле useScrollPosition.js
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 // Хук useScrollPosition принимает параметр restore, который указывает, нужно ли восстанавливать позицию прокрутки при монтировании компонента
@@ -12,7 +12,7 @@ export function useScrollPosition(restore = true) {
 	const [scrollPosition, setScrollPosition] = useState(scroll)
 
 	// При изменении позиции прокрутки, обновляем локальное состояние и параметр scroll в URL
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const handleScroll = () => {
 			const currentScroll = window.scrollY
 			setScrollPosition(currentScroll)
@@ -24,7 +24,7 @@ export function useScrollPosition(restore = true) {
 	}, [setSearchParams])
 
 	// При монтировании компонента, если параметр restore равен true, прокручиваем окно до сохраненной позиции
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (restore) {
 			window.scrollTo(0, scrollPosition)
 		}

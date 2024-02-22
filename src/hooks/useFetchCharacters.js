@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -12,7 +12,7 @@ export function useFetchCharacters() {
 		setCharacters([])
 	}, [category])
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		setLoading(true)
 		setError(false)
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -14,7 +14,7 @@ export function useFetchCategoryId(query, pageNumber) {
 		setCategorySlice(category?.slice(0, -1))
 	}, [category, query])
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		setLoading(true)
 		setError(false)
 
