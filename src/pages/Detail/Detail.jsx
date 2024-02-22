@@ -3,11 +3,9 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
 import { NotFound } from '../../pages/NotFound/NotFound'
-import {
-	useFetchEpisodes,
-	useFetchCharacters,
-	useFetchCategoryId,
-} from '../../hooks'
+import { useFetchEpisodes } from '../../hooks/useFetchEpisodes'
+import { useFetchCharacters } from '../../hooks/useFetchCharacters'
+import { useFetchCategoryId } from '../../hooks/useFetchCategoryId'
 import styles from './Detail.module.css'
 
 export const Detail = () => {

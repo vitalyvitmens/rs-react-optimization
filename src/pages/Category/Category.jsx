@@ -4,7 +4,7 @@ import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
 import { CustomSelect } from '../../components/CustomSelect/CustomSelect'
 import { NotFound } from '../../pages/NotFound/NotFound'
-import { useFetchCategory } from '../../hooks'
+import { useFetchCategory } from '../../hooks/useFetchCategory'
 import styles from './Category.module.css'
 
 export const Category = () => {
