@@ -18,45 +18,45 @@ export const Category = () => {
 	const { loading, error, categories, hasMore, category, id } =
 		useFetchCategory(query, pageNumber)
 
-	const observer = useRef()
+	const lastNodeObserver = useRef()
 	const lastNodeRef = useCallback(
 		(node) => {
 			if (loading) return
 
-			if (observer.current) {
-				observer.current.disconnect()
+			if (lastNodeObserver.current) {
+				lastNodeObserver.current.disconnect()
 			}
 
-			observer.current = new IntersectionObserver((entries) => {
+			lastNodeObserver.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting && hasMore) {
 					setPageNumber((prevState) => prevState + 1)
 				}
 			})
 
 			if (node) {
-				observer.current.observe(node)
+				lastNodeObserver.current.observe(node)
 			}
 		},
 		[hasMore, loading]
 	)
 
-	const firstNodeRef = useRef()
-	const firstNodeObserver = useCallback(
+	const firstNodeObserver = useRef()
+	const firstNodeRef = useCallback(
 		(node) => {
 			if (loading) return
 
-			if (firstNodeRef.current) {
-				firstNodeRef.current.disconnect()
+			if (firstNodeObserver.current) {
+				firstNodeObserver.current.disconnect()
 			}
 
-			firstNodeRef.current = new IntersectionObserver((entries) => {
+			firstNodeObserver.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting) {
 					setPageNumber(1)
 				}
 			})
 
 			if (node) {
-				firstNodeRef.current.observe(node)
+				firstNodeObserver.current.observe(node)
 			}
 		},
 		[loading]
@@ -111,24 +111,49 @@ export const Category = () => {
 					onChange={handleChangeSort}
 				/>
 			</form>
-			<ul>
+			<ol>
 				{sortByCreated(categories, sort).map((item, index) => {
-					if (categories.length - 5 === index + 1) {
+					const isCharacter = category === 'characters'
+					const imgStyle = isCharacter && {
+						width: '40px',
+						height: '40px',
+						margin: '1px 20px 1px 10px',
+						transform: 'translateY(15px)',
+						border: '1px solid #084949',
+						borderRadius: '50%',
+						boxShadow: '-4px -2px 10px black',
+					}
+					if (categories.length - 17 === index + 1) {
 						return (
 							<li ref={lastNodeRef} key={index}>
-								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+								<Link to={`/${category}/${item.id}`}>
+									{isCharacter && (
+										<img style={imgStyle} src={item.image} alt={item.name} />
+									)}
+									{item.name}
+								</Link>
 							</li>
 						)
 					} else if (index === 0) {
 						return (
-							<li ref={firstNodeObserver} key={index}>
-								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+							<li ref={firstNodeRef} key={index}>
+								<Link to={`/${category}/${item.id}`}>
+									{isCharacter && (
+										<img style={imgStyle} src={item.image} alt={item.name} />
+									)}
+									{item.name}
+								</Link>
 							</li>
 						)
 					} else {
 						return (
 							<li ref={lastNodeRef} key={index}>
-								<Link to={`/${category}/${item.id}`}>{item.name}</Link>
+								<Link to={`/${category}/${item.id}`}>
+									{isCharacter && (
+										<img style={imgStyle} src={item.image} alt={item.name} />
+									)}
+									{item.name}
+								</Link>
 							</li>
 						)
 					}
@@ -164,7 +189,7 @@ export const Category = () => {
 					</div>
 				)}
 				{error && <div>Error</div>}
-			</ul>
+			</ol>
 		</div>
 	)
 }
