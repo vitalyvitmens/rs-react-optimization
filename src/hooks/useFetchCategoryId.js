@@ -43,6 +43,5 @@ export function useFetchCategoryId(query, pageNumber) {
 		error,
 		categoriesId,
 		category,
-		id,
 	}
 }
