@@ -1,5 +1,6 @@
 .Login {
 	display: flex;
+  margin-top: 110px;
 	background-color: rgba(234, 223, 249, 0.5);
 	padding: 10px 10px 50px 10px;
 	width: 600px;
