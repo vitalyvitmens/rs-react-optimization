@@ -1,4 +1,3 @@
-import { useState, useTransition } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
@@ -9,13 +8,7 @@ import { useFetchCategoryId } from '../../hooks/useFetchCategoryId'
 import styles from './Detail.module.css'
 
 export const Detail = () => {
-	const [query, setQuery] = useState('')
-	const [pageNumber, setPageNumber] = useState(1)
-	const [isPending, startTransition] = useTransition()
-	const { loading, error, categoriesId, category, id } = useFetchCategoryId(
-		query,
-		pageNumber
-	)
+	const { loading, error, categoriesId, category } = useFetchCategoryId()
 	const { episodes } = useFetchEpisodes()
 	const { characters } = useFetchCharacters()
 	const navigate = useNavigate()
@@ -26,15 +19,6 @@ export const Detail = () => {
 
 	if (!categoriesId && !loading) {
 		return <NotFound />
-	}
-
-	const handleNavigateBack = () => {
-		window.scrollTo(0, 0)
-		startTransition(() => {
-			setQuery(id)
-			setPageNumber(1)
-			navigate(-1)
-		})
 	}
 
 	const imgStyle = {
@@ -239,10 +223,8 @@ export const Detail = () => {
 			<Component
 				component={Button}
 				title="Вернуться назад к списку"
-				disabled={isPending}
-				onClick={handleNavigateBack}
+				onClick={() => navigate(-1)}
 			/>
-			{isPending && <div>Загрузка...</div>}
 		</div>
 	)
 }
