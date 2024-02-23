@@ -89,9 +89,18 @@ export const Category = () => {
 
 	const handlerScrollUp = () => {
 		window.scrollTo(0, 0)
-		startTransition(() => {
-			setPageNumber(1)
-		})
+		startTransition(() => {})
+	}
+
+	const isCharacter = category === 'characters'
+	const imgStyle = isCharacter && {
+		width: '40px',
+		height: '40px',
+		margin: '1px 20px 1px 10px',
+		transform: 'translateY(15px)',
+		border: '1px solid #084949',
+		borderRadius: '50%',
+		boxShadow: '-4px -2px 10px black',
 	}
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
@@ -111,18 +120,8 @@ export const Category = () => {
 					onChange={handleChangeSort}
 				/>
 			</form>
-			<ol style={{ marginLeft: '2rem'}}>
+			<ol style={{ marginLeft: '2rem' }}>
 				{sortByCreated(categories, sort).map((item, index) => {
-					const isCharacter = category === 'characters'
-					const imgStyle = isCharacter && {
-						width: '40px',
-						height: '40px',
-						margin: '1px 20px 1px 10px',
-						transform: 'translateY(15px)',
-						border: '1px solid #084949',
-						borderRadius: '50%',
-						boxShadow: '-4px -2px 10px black',
-					}
 					if (categories.length - 17 === index + 1) {
 						return (
 							<li ref={lastNodeRef} key={index}>
