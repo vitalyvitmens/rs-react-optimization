@@ -37,6 +37,16 @@ export const Detail = () => {
 		})
 	}
 
+	const imgStyle = {
+		width: '40px',
+		height: '40px',
+		margin: '1px 20px 1px 10px',
+		transform: 'translateY(15px)',
+		border: '1px solid #084949',
+		borderRadius: '50%',
+		boxShadow: '-4px -2px 10px black',
+	}
+
 	return (
 		<div className={styles.Detail}>
 			{!categoriesId || loading ? (
@@ -123,6 +133,11 @@ export const Detail = () => {
 																	<Link
 																		to={`/characters/${resident.slice(42)}`}
 																	>
+																		<img
+																			style={imgStyle}
+																			src={item.image}
+																			alt={item.name}
+																		/>
 																		{item.name}
 																	</Link>
 																</li>
@@ -165,6 +180,11 @@ export const Detail = () => {
 																	<Link
 																		to={`/characters/${character.slice(42)}`}
 																	>
+																		<img
+																			style={imgStyle}
+																			src={item.image}
+																			alt={item.name}
+																		/>
 																		{item.name}
 																	</Link>
 																</li>
