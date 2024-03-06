@@ -6,6 +6,7 @@ import { Error } from '../../components/Error/Error'
 import { CustomSelect } from '../../components/CustomSelect/CustomSelect'
 import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategory } from '../../hooks/useFetchCategory'
+import { PRELOAD_THRESHOLD } from '../../constants/preloadThreshold'
 import styles from './Category.module.css'
 
 export const Category = () => {
@@ -127,7 +128,7 @@ export const Category = () => {
 			</form>
 			<ol style={{ marginLeft: '2rem' }}>
 				{sortByCreated(categories, sort).map((item, index) => {
-					if (categories.length - 17 === index + 1) {
+					if (categories.length - PRELOAD_THRESHOLD === index + 1) {
 						return (
 							<li ref={lastNodeRef} key={index}>
 								<Link to={`/${category}/${item.id}`}>
