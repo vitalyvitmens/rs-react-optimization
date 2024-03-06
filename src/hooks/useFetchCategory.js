@@ -39,8 +39,11 @@ export function useFetchCategory(query, pageNumber) {
 					return
 				}
 
-				setError(false)
+				setError(true)
 				console.error(e)
+			})
+			.finally(() => {
+				setLoading(false)
 			})
 
 		return () => cancel()

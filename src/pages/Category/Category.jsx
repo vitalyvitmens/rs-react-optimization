@@ -1,7 +1,9 @@
 import { useCallback, useRef, useState, useTransition } from 'react'
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
+import { Error } from '../../components/Error/Error'
+import { CategoryList } from './components/CategoryList/CategoryList'
 import { CustomSelect } from '../../components/CustomSelect/CustomSelect'
 import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategory } from '../../hooks/useFetchCategory'
@@ -62,22 +64,6 @@ export const Category = () => {
 		[loading]
 	)
 
-	const sortByCreated = (array, order) => {
-		const copy = [...(array || [])]
-		copy.sort((a, b) => {
-			const dateA = Date.parse(a.created)
-			const dateB = Date.parse(b.created)
-			if (order === 'ASC') {
-				return dateA - dateB
-			} else if (order === 'DESC') {
-				return dateB - dateA
-			} else {
-				return 0
-			}
-		})
-		return copy
-	}
-
 	const handleChangeSort = (event) => {
 		const value = event.target.value
 		startTransition(() => {
@@ -93,14 +79,9 @@ export const Category = () => {
 	}
 
 	const isCharacter = category === 'characters'
-	const imgStyle = isCharacter && {
-		width: '40px',
-		height: '40px',
-		margin: '1px 20px 1px 10px',
-		transform: 'translateY(15px)',
-		border: '1px solid #084949',
-		borderRadius: '50%',
-		boxShadow: '-4px -2px 10px black',
+
+	if (error) {
+		return <Error />
 	}
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
@@ -120,75 +101,45 @@ export const Category = () => {
 					onChange={handleChangeSort}
 				/>
 			</form>
-			<ol style={{ marginLeft: '2rem' }}>
-				{sortByCreated(categories, sort).map((item, index) => {
-					if (categories.length - 17 === index + 1) {
-						return (
-							<li ref={lastNodeRef} key={index}>
-								<Link to={`/${category}/${item.id}`}>
-									{isCharacter && (
-										<img style={imgStyle} src={item.image} alt={item.name} />
-									)}
-									{item.name}
-								</Link>
-							</li>
-						)
-					} else if (index === 0) {
-						return (
-							<li ref={firstNodeRef} key={index}>
-								<Link to={`/${category}/${item.id}`}>
-									{isCharacter && (
-										<img style={imgStyle} src={item.image} alt={item.name} />
-									)}
-									{item.name}
-								</Link>
-							</li>
-						)
-					} else {
-						return (
-							<li ref={lastNodeRef} key={index}>
-								<Link to={`/${category}/${item.id}`}>
-									{isCharacter && (
-										<img style={imgStyle} src={item.image} alt={item.name} />
-									)}
-									{item.name}
-								</Link>
-							</li>
-						)
-					}
-				})}
-				{loading && hasMore && (
-					<div style={{ color: 'red', fontSize: '2rem' }}>Loading...</div>
-				)}
-				{!loading && !hasMore && (
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'end',
-							color: 'blue',
-							fontSize: '2rem',
-							fontWeight: '600',
-							textShadow: '-2px 2px 2px black',
-						}}
-					>
-						Конец списка
-						<Component
-							component={Button}
-							title="В начало списка"
-							disabled={isPending}
-							onClick={handlerScrollUp}
-						/>
-						<Component
-							component={Button}
-							title="На главную"
-							disabled={isPending}
-							onClick={() => navigate('/')}
-						/>
-						{isPending && <div>Загрузка...</div>}
-					</div>
-				)}
-				{error && <div>Error</div>}
-			</ol>
+			<CategoryList
+				category={category}
+				categories={categories}
+				sort={sort}
+				isCharacter={isCharacter}
+				lastNodeRef={lastNodeRef}
+				firstNodeRef={firstNodeRef}
+			/>
+			{loading && hasMore && (
+				<div style={{ color: 'red', fontSize: '2rem' }}>Loading...</div>
+			)}
+			{!loading && !hasMore && (
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'end',
+						color: 'blue',
+						fontSize: '2rem',
+						fontWeight: '600',
+						textShadow: '-2px 2px 2px black',
+					}}
+				>
+					Конец списка
+					<Component
+						component={Button}
+						title="В начало списка"
+						disabled={isPending}
+						onClick={handlerScrollUp}
+					/>
+					<Component
+						component={Button}
+						title="На главную"
+						disabled={isPending}
+						onClick={() => navigate('/')}
+					/>
+					{isPending && <div>Загрузка...</div>}
+				</div>
+			)}
+			{error && <div>Error</div>}
 		</div>
 	)
 }

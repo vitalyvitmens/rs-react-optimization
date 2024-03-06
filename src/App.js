@@ -1,38 +1,14 @@
 import { AuthProvider } from './context/AuthProvider'
-import { lazy } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
+import Login from './pages/Login/Login.lazy'
+import Navigation from './layout/Navigation/Navigation.lazy'
+import Home from './pages/Home/Home.lazy'
+import Category from './pages/Category/Category.lazy'
+import Detail from './pages/Detail/Detail.lazy'
+import NotFound from './pages/NotFound/NotFound.lazy'
 import styles from './app.module.css'
-
-const Login = lazy(() =>
-	import('./pages/Login/Login').then((module) => ({
-		default: module.Login,
-	}))
-)
-const Navigation = lazy(() =>
-	import('./layout/Navigation/Navigation').then((module) => ({
-		default: module.Navigation,
-	}))
-)
-const Home = lazy(() =>
-	import('./pages/Home/Home').then((module) => ({ default: module.Home }))
-)
-const Category = lazy(() =>
-	import('./pages/Category/Category').then((module) => ({
-		default: module.Category,
-	}))
-)
-const Detail = lazy(() =>
-	import('./pages/Detail/Detail').then((module) => ({
-		default: module.Detail,
-	}))
-)
-const NotFound = lazy(() =>
-	import('./pages/NotFound/NotFound').then((module) => ({
-		default: module.NotFound,
-	}))
-)
 
 export const App = () => {
 	return (
