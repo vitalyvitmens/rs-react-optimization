@@ -2,6 +2,7 @@ import { useCallback, useRef, useState, useTransition } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { Component } from '../../components/Component/Component'
 import { Button } from '../../components/Button/Button'
+import { Error } from '../../components/Error/Error'
 import { CustomSelect } from '../../components/CustomSelect/CustomSelect'
 import { NotFound } from '../../pages/NotFound/NotFound'
 import { useFetchCategory } from '../../hooks/useFetchCategory'
@@ -101,6 +102,10 @@ export const Category = () => {
 		border: '1px solid #084949',
 		borderRadius: '50%',
 		boxShadow: '-4px -2px 10px black',
+	}
+
+	if (error) {
+		return <Error />
 	}
 
 	if (category && !['characters', 'locations', 'episodes'].includes(category)) {
